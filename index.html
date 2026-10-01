@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Google Analytics : chargé UNIQUEMENT après consentement (voir bloc « Consentement » en bas de page) -->
+<!-- Google Analytics : chargé directement au démarrage, sans bandeau de consentement (voir bloc en bas de page) -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Teyuna — Le Carnet déchiré</title>
@@ -484,7 +484,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media (max-width:640px){
   .cname-input,.ans-input{font-size:16px!important}
 }
-/* Lien confidentialité */
+/* Bandeau de consentement désactivé : GA se lance directement */ #consent,#privacyLink{display:none!important} /* Lien confidentialité */
 #privacyLink{background:none;border:none;color:inherit;opacity:.75;text-decoration:underline;font:inherit;font-size:13px;cursor:pointer;min-height:44px;padding:0 12px;margin-top:6px}
 /* Bandeau de consentement */
 #consent{position:fixed;left:0;right:0;bottom:0;z-index:1000001;background:#FBF6EA;color:#2B2316;border-top:2px solid #C9A227;box-shadow:0 -6px 24px rgba(0,0,0,.35);padding:14px max(16px,env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left));display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-content:center;max-height:60vh;max-height:60dvh;overflow-y:auto;font-family:Georgia,serif}
@@ -2677,7 +2677,7 @@ document.addEventListener('keydown',function(e){
 <script>
 /* ===== Consentement Google Analytics (opt-in, retrait possible) ===== */
 (function(){
-  var GA_ID='G-21YS4ME56T', KEY='consentAnalytics', MAX_AGE=180*24*3600*1000; /* 6 mois */
+  var GA_ID='G-YHCQJ8V3JB', KEY='consentAnalytics', MAX_AGE=180*24*3600*1000; /* 6 mois */
   window.dataLayer=window.dataLayer||[];
   window.gtag=function(){}; /* inactif tant qu'il n'y a pas de consentement */
   var loaded=false;
@@ -2721,11 +2721,11 @@ document.addEventListener('keydown',function(e){
   function choose(v){ saveChoice(v); hide(); if(v==='granted') loadGA(); else purgeGA(); }
   document.getElementById('consentOk').addEventListener('click',function(){choose('granted');});
   document.getElementById('consentNo').addEventListener('click',function(){choose('denied');});
-  window.openConsent=function(){show();};
+  window.openConsent=function(){};
   /* Au chargement : applique un choix déjà enregistré ; sinon bandeau après l'écran « propriété intellectuelle » */
-  var c=readChoice(); if(c==='granted') loadGA();
+  loadGA(); /* mesure d'audience lancée d'emblée, sans consentement */
   var _cw=closeWarn;
-  closeWarn=function(){ _cw.apply(this,arguments); if(readChoice()===null) show(); };
+  closeWarn=function(){ _cw.apply(this,arguments); };
   var _sl=setLang; setLang=function(l){ _sl(l); applyConsentText(); };
   applyConsentText();
 })();
